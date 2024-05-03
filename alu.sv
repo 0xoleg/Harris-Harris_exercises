@@ -13,16 +13,23 @@ logic [31:0] b_and_b;
 logic [31:0] b_or_b;
 logic [31:0] b_plus_b;
 
+//always_comb begin
+//  if (f[2]) bb = ~b;
+//  else      bb =  b;
+//end
+
+//always_comb begin
+//  if (f[2]) bb = ~b;
+//  else      bb =  b;
+//  {cout, s} = a + bb + f[2];
+//end
+
 always_comb begin
   if (f[2]) bb = ~b;
   else      bb =  b;
-end
 
-always_comb begin
   {cout, s} = a + bb + f[2];
-end
 
-always_comb begin
   case (f[1:0])
     2'b00 : y = a & bb;
     2'b01 : y = a | bb;

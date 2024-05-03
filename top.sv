@@ -1,10 +1,10 @@
-`include "exercise5.12/tb5.12.sv"
+`include "alu.sv"
 
 module top (
   input  logic clk,
   output logic out
 );
 
-//testbench tb();
+alu DUT();
 
 endmodule
