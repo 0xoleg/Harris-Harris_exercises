@@ -1,10 +1,10 @@
-`include "lsl.sv"
+`include "adder_float.sv"
 
 module top (
   input  logic clk,
   output logic out
 );
 
-lsl #(.WIDTH(32), .SHIFT(2)) DUT();
+adder_float DUT();
 
 endmodule

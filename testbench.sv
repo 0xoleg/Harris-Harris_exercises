@@ -1,17 +1,14 @@
-`include "exercise5.9.sv"
+
 
 module testbench();
-logic [31:0] a = 32'b01111111_01111111_11111111_11111111;
-logic [31:0] b = 32'b10000000_10000000_00000000_00000001;
-logic [ 2:0] f;
-logic [31:0] y;
-
-my_alu DUT(a, b, f, y);
+logic [31:0] f;
+shortreal f_expected = 0.5;
 
 initial begin
   #5;
-  f = 3'b000;
-  $display("a & b = %b", y);
+  f = 32'h3F000000;
+  if (f === $shortrealtobits(f_expected)) $display("It's Ok! f: %b\n", f);
+  else           $display("Suka blyat'!\nf: %b\nf expected: %b\n", f, $shortrealtobits(f_expected));
 end
 
-endmodule 
+endmodule
