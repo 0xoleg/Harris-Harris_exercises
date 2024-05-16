@@ -81,8 +81,10 @@ always_comb begin
     end
   end
 
-  sum_next = sum << (23-leading_one_bit_num);
-  g_exponent = g[30:23] - (23-leading_one_bit_num);
+  if ( leading_one_bit_num != 4'd24 ) begin
+    sum_next = sum << (23-leading_one_bit_num);
+    g_exponent = g[30:23] - (23-leading_one_bit_num);
+  end
 
   y = {g[31], g_exponent, sum_next[22:0]};
 end
