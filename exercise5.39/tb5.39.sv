@@ -5,58 +5,45 @@ logic [31:0] a, b, y;
 
 adder_float DUT(a, b, y);
 
+task display_result(
+  input  shortreal x0, x1
+  );
+  begin
+    a = $shortrealtobits(x0);
+    b = $shortrealtobits(x1);
+    #1;
+    $display("a = %f\nb = %f\na+b = %f\n", x0, x1, $bitstoshortreal(y));
+  end
+endtask
+
 initial begin
-  a = $shortrealtobits(1.0);
-  b = $shortrealtobits(1.0);
-  #5;
-  $display("a = %f\nb = %f\na+b = %f\n", $bitstoshortreal(a), $bitstoshortreal(b), $bitstoshortreal(y));
-  #5;
-  a = $shortrealtobits(0.5);
-  b = $shortrealtobits(0.25);
-  #5;
-  $display("a = %f\nb = %f\na+b = %f\n", $bitstoshortreal(a), $bitstoshortreal(b), $bitstoshortreal(y));
-  #5;
-  a = $shortrealtobits(0.5);
-  b = $shortrealtobits(0.0625);
-  #5;
-  $display("a = %f\nb = %f\na+b = %f\n", $bitstoshortreal(a), $bitstoshortreal(b), $bitstoshortreal(y));
-  #5;
-  a = $shortrealtobits(0.3);
-  b = $shortrealtobits(0.25);
-  #5;
-  $display("a = %f\nb = %f\na+b = %f\n", $bitstoshortreal(a), $bitstoshortreal(b), $bitstoshortreal(y));
-  #5;
-  a = $shortrealtobits(0.3);
-  b = $shortrealtobits(0.6);
-  #5;
-  $display("a = %f\nb = %f\na+b = %f\n", $bitstoshortreal(a), $bitstoshortreal(b), $bitstoshortreal(y));
-  #5;
-  a = $shortrealtobits(0.5);
-  b = $shortrealtobits(1.0);
-  #5;
-  $display("a = %f\nb = %f\na+b = %f\n", $bitstoshortreal(a), $bitstoshortreal(b), $bitstoshortreal(y));
-  #5;
-  a = $shortrealtobits(19.34);
-  b = $shortrealtobits(8.356);
-  #5;
-  $display("a = %f\nb = %f\na+b = %f\n", $bitstoshortreal(a), $bitstoshortreal(b), $bitstoshortreal(y));
-  #5;
-  a = $shortrealtobits(1.0);
-  b = $shortrealtobits(-0.5);
-  #5;
-  $display("a = %f\nb = %f\na+b = %f\n", $bitstoshortreal(a), $bitstoshortreal(b), $bitstoshortreal(y));
-  #5;
-  a = $shortrealtobits(-1.0);
-  b = $shortrealtobits(0.5);
-  #5;
-  $display("a = %f\nb = %f\na+b = %f\n", $bitstoshortreal(a), $bitstoshortreal(b), $bitstoshortreal(y));
-  #5;
-  a = $shortrealtobits(-0.8);
-  b = $shortrealtobits(11.7);
-  #5;
-  $display("a = %f\nb = %f\na+b = %f\n", $bitstoshortreal(a), $bitstoshortreal(b), $bitstoshortreal(y));
-  #5;
-  $finish();
+  display_result(1.0, 1.0);
+  #2;
+  display_result(0.5, 0.25);
+  #2;
+  display_result(0.5, 0.0625);
+  #2
+  display_result(0.3, 0.25);
+  #2
+  display_result(0.3, 0.6);
+  #2
+  display_result(0.5, 1.0);
+  #2
+  display_result(19.34, 8.356);
+  #2
+  display_result(1.0, -0.5);
+  #2
+  display_result(-1.0, 0.5);
+  #2
+  display_result(-0.8, 11.7);
+  #2
+  display_result(1.0, -1.0);
+  #2
+  display_result(-34.6384, 17.43);
+  #2
+  display_result(-0.63848, 0.00047);
+  #2
+  $stop();
 end
 
 endmodule

@@ -2,9 +2,10 @@
 
 module top (
   input  logic clk,
-  output logic out
+  input  logic [31:0] a, b,
+  output logic [31:0] out
 );
 
-adder_float DUT();
+adder_float DUT(a, b, out);
 
 endmodule

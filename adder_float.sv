@@ -7,11 +7,13 @@ module adder_float(
 logic [31: 0] g, l;
 logic [ 7: 0] g_exponent, l_exponent;
 logic [23: 0] g_with_implicit_one, l_with_implicit_one;
+
 logic [ 7: 0] exps_diff;
 logic [24: 0] sum, sum_next;
-logic         g_sign, l_sign;
 
-logic leading_one_found;
+// finding lead one in numbers sum
+logic [24:0] leading_one_found;
+logic [ 4:0] leading_one_bit_num;
 
 always_comb begin
   if (a[30:0] >= b[30:0]) begin g = a; l = b; end
@@ -22,34 +24,67 @@ always_comb begin
   l_with_implicit_one = {1'b1, l[22:0]} >> exps_diff;
   g_with_implicit_one = {1'b1, g[22:0]};
 
-  g_sign = g[31];
-  l_sign = l[31];
-  if (g_sign ^ l_sign) sum = g_with_implicit_one - l_with_implicit_one;
-  else                 sum = g_with_implicit_one + l_with_implicit_one;
+  if (g[31] ^ l[31]) sum = g_with_implicit_one - l_with_implicit_one;
+  else               sum = g_with_implicit_one + l_with_implicit_one;
 
-  leading_one_found = 0;
-  sum_next = sum;
-  g_exponent = g[30:23]; 
-  if (sum[24:23] > 0) begin
-    for (int i = 1; i >=0; i-=1) begin
-      if ( (sum[24:23] >= 2**i) & !leading_one_found ) begin
-        sum_next = sum >> i;
-        g_exponent = g[30:23] + i;
-        leading_one_found = 1;
-      end
-    end
+  //if ( sum[24] & 1'b1 ) begin
+  //  sum_next = sum >> 1;
+  //  g_exponent = g[30:23] + 1'b1;
+  //  leading_one_found[24] = 1'b1;
+  //end
+  //else begin
+  //  sum_next = sum;
+  //  g_exponent = g[30:23];
+  //  leading_one_found[24] = 1'b0;
+  //end
+//
+  //for ( int i = 23; i >= 0; i-=1) begin
+  //  if ( leading_one_found[i+1] ) begin
+  //    leading_one_found[i] = 1'b1;
+  //  end
+  //  else begin
+  //    if ( sum[i] & 1'b1 ) begin
+  //      sum_next = sum << (23-i);
+  //      g_exponent = g[30:23] - (23-i);
+  //      leading_one_found[i] = 1'b1;
+  //    end
+  //    else begin
+  //      leading_one_found[i] = 1'b0;
+  //    end
+  //  end
+  //end
+  if ( sum[24] & 1'b1 ) begin
+    sum_next = sum >> 1;
+    g_exponent = g[30:23] + 1'b1;
+    leading_one_found[24] = 1'b1;
+    leading_one_bit_num = 4'd24;
   end
   else begin
-    for (int i = 22; i != 0; i-=1) begin
-      if ( (sum[22:0] >= 2**i) & !leading_one_found) begin
-        sum_next = sum << (22-(i-1));
-        g_exponent = g[30:23] - (22-(i-1));
-        leading_one_found = 1;
+    sum_next = sum;
+    g_exponent = g[30:23];
+    leading_one_found[24] = 1'b0;
+    leading_one_bit_num = 4'd0;
+  end
+
+  for ( int i = 23; i >= 0; i-=1) begin
+    if ( leading_one_found[i+1] ) begin
+      leading_one_found[i] = 1'b1;
+    end
+    else begin
+      if ( sum[i] & 1'b1 ) begin
+        leading_one_found[i] = 1'b1;
+        leading_one_bit_num = i;
+      end
+      else begin
+        leading_one_found[i] = 1'b0;
       end
     end
   end
 
-  y = {g_sign, g_exponent, sum_next[22:0]};
+  sum_next = sum << (23-leading_one_bit_num);
+  g_exponent = g[30:23] - (23-leading_one_bit_num);
+
+  y = {g[31], g_exponent, sum_next[22:0]};
 end
 
 endmodule
