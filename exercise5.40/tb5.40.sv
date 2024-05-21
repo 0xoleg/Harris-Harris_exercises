@@ -1,9 +1,9 @@
-`include "../adder_float.sv"
+`include "../mul_float.sv"
 
 module testbench();
 logic [31:0] a, b, y;
 
-adder_float DUT(a, b, y);
+mul_float DUT(a, b, y);
 
 task display_result(
   input  shortreal x0, x1
@@ -12,7 +12,7 @@ task display_result(
     a = $shortrealtobits(x0);
     b = $shortrealtobits(x1);
     #1;
-    $display("a = %f\nb = %f\na+b = %f\n", x0, x1, $bitstoshortreal(y));
+    $display("a = %f\nb = %f\na*b = %f or %b\n", x0, x1, $bitstoshortreal(y), y);
   end
 endtask
 

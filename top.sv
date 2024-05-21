@@ -6,6 +6,6 @@ module top (
   output logic [31:0] out
 );
 
-adder_float DUT(a, b, out);
+mul_float DUT(a, b, out);
 
 endmodule
