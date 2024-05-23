@@ -1,4 +1,4 @@
-`include "adder_float.sv"
+`include "prefix_adder_32bit.sv"
 
 module top (
   input  logic clk,
@@ -6,6 +6,6 @@ module top (
   output logic [31:0] out
 );
 
-mul_float DUT(a, b, out);
+prefix_adder_32bit DUT(a, b, out);
 
 endmodule
