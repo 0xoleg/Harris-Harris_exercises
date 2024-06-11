@@ -1,11 +1,23 @@
 `include "prefix_adder_32bit.sv"
 
 module top (
-  input  logic clk,
-  input  logic [31:0] a, b,
-  output logic [31:0] out
+  input  logic clk, rst,
+  input  logic x1, x2,
+  output logic [15:0] out
 );
 
-prefix_adder_32bit DUT(a, b, out);
+assign cin = '0;
+logic cout;
+logic [15:0] a, b, y;
+
+prefix_adder_32bit DUT(cin, a, b, y, cout);
+//assign {cout, y} = a + b + cin;
+
+always_ff @(posedge clk or posedge rst) begin
+  if ( rst ) begin a <= '0;       b <= '0;       end
+  else       begin a <= a + 1'd1; b <= b + 2'd2; end
+end
+
+assign out = |y;
 
 endmodule
