@@ -3,12 +3,12 @@
 module top (
   input  logic clk, rst,
   input  logic x1, x2,
-  output logic [15:0] out
+  output logic out
 );
 
 assign cin = '0;
 logic cout;
-logic [15:0] a, b, y;
+logic [31:0] a, b, y;
 
 prefix_adder_32bit DUT(cin, a, b, y, cout);
 //assign {cout, y} = a + b + cin;
