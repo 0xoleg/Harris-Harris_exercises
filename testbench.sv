@@ -1,14 +1,33 @@
-
+`include "top.sv"
 
 module testbench();
-logic [31:0] f;
-shortreal f_expected = 0.5;
 
+parameter PERIOD = 4;
+
+logic clk, rst;
+logic out;
+
+top DUT(clk, rst, out);
+
+// clk generate
 initial begin
-  #5;
-  f = 32'h3F000000;
-  if (f === $shortrealtobits(f_expected)) $display("It's Ok! f: %b\n", f);
-  else           $display("Suka blyat'!\nf: %b\nf expected: %b\n", f, $shortrealtobits(f_expected));
+  clk = 0;
+  forever begin
+    #(PERIOD/2) clk = ~clk;
+  end
+end
+
+// reset
+initial begin
+  rst = 1;
+  #(PERIOD*2);
+  rst = 0;
+end
+
+// some logic
+initial begin
+  
+  $stop();
 end
 
 endmodule

@@ -2,7 +2,6 @@
 
 module top (
   input  logic clk, rst,
-  input  logic x1, x2,
   output logic out
 );
 
@@ -15,7 +14,7 @@ prefix_adder_32bit DUT(cin, a, b, y, cout);
 
 always_ff @(posedge clk or posedge rst) begin
   if ( rst ) begin a <= '0;       b <= '0;       end
-  else       begin a <= a + 1'd1; b <= b + 2'd2; end
+  else       begin a <= a + 1'd1; b <= b + 2'd3; end
 end
 
 assign out = |y;

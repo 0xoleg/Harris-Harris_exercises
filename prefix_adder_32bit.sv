@@ -272,6 +272,8 @@ assign p5[15] = p4[15] & p4[7];
 assign g5[15] = g4[15] | ( p4[15] & g4[7] );
 
 
+assign cout = ( cin & p5[15] ) | g5[15];
+
 assign s[31] = (a[31] ^ b[31]) ^ g5[15];
 assign s[30] = (a[30] ^ b[30]) ^ g5[14];
 assign s[29] = (a[29] ^ b[29]) ^ g5[13];
