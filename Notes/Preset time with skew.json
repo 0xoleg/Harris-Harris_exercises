@@ -1,0 +1,14 @@
+{
+signal: [
+  {name: 'CLK1', wave: '0..1........0........1', period: 0.5, phase: 0},
+  {name: 'CLK2', wave: '01........0........1...', period: 0.5, phase: 0.5},
+  {node:'I........J'},
+  {name: 'CLK', wave: '0x..1.....x..0.....x..1', period: 0.5, phase: 0.5},
+  {name: 'Q1', wave: '2.x.2......', phase: 1},
+  {name: 'D2', wave: '2..x...2..'},
+  {period: 0.5, node: '...U..Q.......D...Y..E'},
+],
+edge:[
+  'I+J T_c', 'U+Q t_pcq', 'Q+D t_pd', 'D+Y t_setup', 'Y+E t_skew'
+]
+}

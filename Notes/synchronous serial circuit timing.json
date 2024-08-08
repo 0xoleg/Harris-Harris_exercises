@@ -1,0 +1,14 @@
+{
+signal: [
+  {node:'I.......J'},
+  {name: 'CLK', wave: '0101', period: 4, phase: 4},
+  {node: 'S.T'},
+  {name: 'Q1', wave: '2.x2.......', phase: 1},
+  {node: '..Q....D'},
+  {name: 'D2', wave: '2..x.x.2.'},
+  {node: '.......YE'},
+],
+edge:[
+  'I+J T_c', 'S+T t_pcq', 'Q+D t_pd', 'Y+E t_set'
+]
+}
